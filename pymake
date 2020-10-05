@@ -1,0 +1,47 @@
+#!/usr/bin/python3
+
+import os
+
+source_files = [
+    "control.cc",
+    "main.cc",
+    "rendering.cc"
+]
+
+header_files = [
+    "control.hh",
+    "rendering.hh"
+]
+
+# --- Check if Files Exist ---
+for i in header_files:
+    if not os.path.isfile(f"src/{i}"):
+        raise(f"src/{i} expected to exist but it's not")
+
+for i in source_files:
+    if not os.path.isfile(f"src/{i}"):
+        raise(f"src/{i} expected to exist but it's not")
+
+# --- Compiling Source Files ---
+# - Preparing Build Folder
+try:
+    os.system("rm -rf build/")
+    os.mkdir("build/")
+    os.mkdir("build/obj")
+    os.mkdir("build/bin")
+except: pass
+
+# --- Compile Source
+for i in source_files:
+    print(f"Compiling {i}...")
+    os.system(f"g++ -c src/{i} -o build/obj/{i.replace('.cc', '.obj')}")
+
+# --- Linking
+links = "".join(
+    [
+        f"build/obj/{i.replace('.cc', '.obj')} "
+        for i in source_files
+    ]
+)
+
+os.system(f"g++ {links} -o build/bin/gol-freeglut.o -lGL -lGLU -lglut")
