@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef CONTROL_HH
-#define CONTROL_HH
+#ifndef CONTROL
+#define CONTROL
 
 #include <vector>
 
@@ -16,4 +16,4 @@ void KeyboardSpecialUpEventHandler(int, int, int);
 
 void MouseEventHandler(int, int, int, int);
 
-#endif // CONTROL_HH
+#endif // CONTROL

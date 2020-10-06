@@ -1,4 +1,7 @@
-#include "control.hh"
+#include <iostream>
+
+#include "control"
+#include "rendering"
 
 std::vector<unsigned char> standardKeyPress;
 std::vector<int> specialKeyPress;
@@ -29,5 +32,7 @@ KeyboardSpecialUpEventHandler(int key, int mouseX, int mouseY){
 // MOUSE EVENTS -----
 void
 MouseEventHandler(int button, int state, int mouseX, int mouseY){
-
+    if(button == 0 && state == 0){
+        MouseClickEvent(mouseX, mouseY);
+    }
 }

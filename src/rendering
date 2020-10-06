@@ -1,0 +1,18 @@
+#pragma once
+
+#ifndef RENDERING
+#define RENDERING
+
+extern int WIDTH;
+extern int HEIGHT;
+
+#include "cell"
+
+extern std::vector<Cell*> * cells;
+
+void InitGame();
+void RenderDisplay(void);
+void UpdateScreen(int);
+void MouseClickEvent(int, int);
+
+#endif // RENDERING

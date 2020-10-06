@@ -5,8 +5,8 @@
 #include <GL/glu.h>
 #include <GL/glut.h>
 
-#include "control.hh"
-#include "rendering.hh"
+#include "control"
+#include "rendering"
 
 int
 Main(int argc, char** argv){
@@ -15,14 +15,16 @@ Main(int argc, char** argv){
 
     // Initialization
     glutInit(&argc, argv);
-    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_MULTISAMPLE);
+    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_MULTISAMPLE);
     glutInitWindowSize(WIDTH, HEIGHT);
     glutCreateWindow("Test Window");
 
     // Configuration
-    glutSetKeyRepeat(GLUT_KEY_REPEAT_OFF);
     glEnable(GL_MULTISAMPLE);
     glEnable(GL_POINT_SMOOTH);
+    gluOrtho2D(0, WIDTH, HEIGHT, 0);
+    glutGameModeString(mode_string);
+    glutFullScreen();
 
     // Control Functions
     glutKeyboardFunc(KeyboardStandardDownEventHandler);
@@ -30,13 +32,13 @@ Main(int argc, char** argv){
     glutSpecialFunc(KeyboardSpecialDownEventHandler);
     glutSpecialUpFunc(KeyboardSpecialUpEventHandler);
     glutMouseFunc(MouseEventHandler);
+
     // Game Functinos
     glutDisplayFunc(RenderDisplay);
-    glutTimerFunc(7, UpdateScreen, 7);
+    glutTimerFunc(9, UpdateScreen, 9);
 
     // Go
-    glutGameModeString(mode_string);
-    glutFullScreen();
+    InitGame();
     glutMainLoop();
 
     return 0;

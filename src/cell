@@ -1,0 +1,26 @@
+#pragma once
+
+#ifndef CELL
+#define CELL
+
+#include <vector>
+#include "types"
+
+class Cell {
+public:
+    coord2d * pos;
+    double size;
+    bool isCurrentlyActive = false;
+    bool nextState = this->isCurrentlyActive;
+
+    Cell(double, double, double);
+    ~Cell();
+
+    void draw();
+    void checkNeighbours(std::vector<Cell*>*, unsigned int, int, int);
+    void step();
+
+    bool isInside(int, int);
+};
+
+#endif // CELL
