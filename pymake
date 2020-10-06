@@ -3,10 +3,10 @@
 import os, sys
 
 def run():
-    if not os.path.isfile(f"build/bin/gol-freeglut.o"):
-        raise("gol-freeglut haven't compiled")
+    if not os.path.isfile(f"build/bin/gol"):
+        raise("gol haven't compiled")
     
-    os.system("./build/bin/gol-freeglut.o")
+    os.system("./build/bin/gol")
 
 def make():
     source_files = [
@@ -55,7 +55,7 @@ def make():
         ]
     )
 
-    os.system(f"g++ {links} -o build/bin/gol-freeglut.o -lGL -lGLU -lglut")
+    os.system(f"g++ {links} -o build/bin/gol -lGL -lGLU -lglut")
 
 if __name__ == "__main__":
     try: arg = sys.argv[1]
