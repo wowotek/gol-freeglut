@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef TYPES
-#define TYPES
+#ifndef TYPES_HH
+#define TYPES_HH
 
 template <typename T>
 struct t_coordinate{
@@ -16,4 +16,4 @@ struct t_coordinate{
 
 typedef t_coordinate<double> coord2d;
 
-#endif // TYPES
+#endif // TYPES_HH

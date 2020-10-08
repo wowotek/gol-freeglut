@@ -1,10 +1,10 @@
 #pragma once
 
-#ifndef CELL
-#define CELL
+#ifndef CELL_HH
+#define CELL_HH
 
 #include <vector>
-#include "types"
+#include "types.hh"
 
 class Cell {
 public:
@@ -23,4 +23,4 @@ public:
     bool isInside(int, int);
 };
 
-#endif // CELL
+#endif // CELL_HH

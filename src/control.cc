@@ -1,7 +1,7 @@
 #include <iostream>
 
-#include "control"
-#include "rendering"
+#include "control.hh"
+#include "rendering.hh"
 
 std::vector<unsigned char> standardKeyPress;
 std::vector<int> specialKeyPress;

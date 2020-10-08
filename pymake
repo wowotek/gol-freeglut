@@ -17,11 +17,11 @@ def make():
     ]
 
     header_files = [
-        "control",
-        "rendering",
-        "cell",
-        "rendering",
-        "types"
+        "control.hh",
+        "rendering.hh",
+        "cell.hh",
+        "rendering.hh",
+        "types.hh"
     ]
 
     # --- Check if Files Exist ---

@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <GL/freeglut.h>
 
-#include "cell"
-#include "types"
+#include "cell.hh"
+#include "types.hh"
 
 Cell::Cell(double x, double y, double size){
     this->pos = new coord2d(x, y);

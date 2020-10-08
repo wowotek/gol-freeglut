@@ -5,8 +5,8 @@
 #include <GL/glu.h>
 #include <GL/glut.h>
 
-#include "control"
-#include "rendering"
+#include "control.hh"
+#include "rendering.hh"
 
 int
 Main(int argc, char** argv){

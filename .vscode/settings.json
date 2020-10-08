@@ -1,6 +1,6 @@
 {
     "files.associations": {
-        "cell": "cpp",
+        "cell.hh": "cpp",
         "chrono": "cpp",
         "array": "cpp",
         "atomic": "cpp",

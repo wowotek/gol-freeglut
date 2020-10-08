@@ -3,8 +3,8 @@
 #include <chrono>
 #include <GL/freeglut.h>
 
-#include "rendering"
-#include "cell"
+#include "rendering.hh"
+#include "cell.hh"
 
 int WIDTH = 1920;
 int HEIGHT = 1080;

@@ -1,12 +1,12 @@
 #pragma once
 
-#ifndef RENDERING
-#define RENDERING
+#ifndef RENDERING_HH
+#define RENDERING_HH
 
 extern int WIDTH;
 extern int HEIGHT;
 
-#include "cell"
+#include "cell.hh"
 
 extern std::vector<Cell*> * cells;
 
@@ -15,4 +15,4 @@ void RenderDisplay(void);
 void UpdateScreen(int);
 void MouseClickEvent(int, int);
 
-#endif // RENDERING
+#endif // RENDERING_HH
