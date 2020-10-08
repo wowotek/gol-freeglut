@@ -10,14 +10,12 @@ def run():
 
 def make():
     source_files = [
-        "control.cc",
         "main.cc",
         "rendering.cc",
         "cell.cc"
     ]
 
     header_files = [
-        "control.hh",
         "rendering.hh",
         "cell.hh",
         "rendering.hh",
@@ -45,7 +43,7 @@ def make():
     # --- Compile Source
     for i in source_files:
         print(f"Compiling {i}...")
-        os.system(f"g++ -c src/{i} -o build/obj/{i.replace('.cc', '.obj')}")
+        os.system(f"g++ -O3 -c src/{i} -o build/obj/{i.replace('.cc', '.obj')}")
 
     # --- Linking
     links = "".join(
@@ -55,7 +53,7 @@ def make():
         ]
     )
 
-    os.system(f"g++ {links} -o build/bin/gol -lGL -lGLU -lglut")
+    os.system(f"g++ -O3 {links} -o build/bin/gol -lGL -lGLU -lglut")
 
 if __name__ == "__main__":
     try: arg = sys.argv[1]
