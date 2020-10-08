@@ -13,6 +13,10 @@ extern std::vector<Cell*> * cells;
 void InitGame();
 void RenderDisplay(void);
 void UpdateScreen(int);
-void MouseClickEvent(int, int);
+
+void KeyboardDownEvent(unsigned char, int, int);
+void KeyboardUpEvent(unsigned char, int, int);
+void MouseClickEvent(int, int, int, int);
+void MouseDragEvent(int, int);
 
 #endif // RENDERING_HH

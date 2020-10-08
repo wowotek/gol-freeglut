@@ -9,6 +9,8 @@
 int WIDTH = 1920;
 int HEIGHT = 1080;
 int cell_size = 8;
+bool mouseClicked = false;
+
 
 std::vector<Cell*> * cells = new std::vector<Cell*>();
 
@@ -30,7 +32,7 @@ InitGame(){
             Cell * nc = new Cell(x, y, cell_size);
             
             int probs = (rand() % 101 + 1) - 1;
-            if(probs >= 40) nc->nextState = true;
+            if(probs >= 35) nc->nextState = true;
 
             cells->push_back(nc);
         }
@@ -59,41 +61,43 @@ double count = 0;
 
 void
 UpdateScreen(int time){
-    for(unsigned int i=0; i<cells->size(); i++){
-        cells->at(i)->checkNeighbours(cells, i, WIDTH/cell_size, HEIGHT/cell_size);
-    }
-    for(unsigned int i=0; i<cells->size(); i++){
-        cells->at(i)->step();
-    }
-
-    int activeCells = 0;
-    for(unsigned int i = 0; i<cells->size(); i++){
-        if(cells->at(i)->isCurrentlyActive) activeCells++;
-    }
-    activeCellslog.push_back(activeCells);
-
-    int avg = 0;
-    if(count >= 1000){
-        count = 0;
-        cycles++;
-        for(unsigned int i = 0; i<activeCellslog.size(); i++){
-            avg += activeCellslog.at(i);
+    if(!mouseClicked) {
+        for(unsigned int i=0; i<cells->size(); i++){
+            cells->at(i)->checkNeighbours(cells, i, WIDTH/cell_size, HEIGHT/cell_size);
         }
-        avg = avg/activeCellslog.size();
-        activeCellslog = std::vector<int>();
-    }
-    count += (std::chrono::high_resolution_clock::now() - std::chrono::high_resolution_clock::now()).count();
+        for(unsigned int i=0; i<cells->size(); i++){
+            cells->at(i)->step();
+        }
 
-    if(cycles >= 3){
-        std::cout << "Current Average : " << avg << " | Last Average : " << lastAverage << std::endl;
-        cycles = 0;
-        if(avg >= lastAverage - 3 && avg <= lastAverage + 3){
-            activeCellslog = std::vector<int>();
+        int activeCells = 0;
+        for(unsigned int i = 0; i<cells->size(); i++){
+            if(cells->at(i)->currentState) activeCells++;
+        }
+        activeCellslog.push_back(activeCells);
+
+        int avg = 0;
+        if(count >= 1000){
             count = 0;
-            lastAverage = 0;
-            InitGame();
+            cycles++;
+            for(unsigned int i = 0; i<activeCellslog.size(); i++){
+                avg += activeCellslog.at(i);
+            }
+            avg = avg/activeCellslog.size();
+            activeCellslog = std::vector<int>();
         }
-        lastAverage = avg;
+        count += (std::chrono::high_resolution_clock::now() - std::chrono::high_resolution_clock::now()).count();
+
+        if(cycles >= 3){
+            std::cout << "Current Average : " << avg << " | Last Average : " << lastAverage << std::endl;
+            cycles = 0;
+            if(avg >= lastAverage - 3 && avg <= lastAverage + 3){
+                activeCellslog = std::vector<int>();
+                count = 0;
+                lastAverage = 0;
+                InitGame();
+            }
+            lastAverage = avg;
+        }
     }
 
     glutPostRedisplay();
@@ -102,8 +106,31 @@ UpdateScreen(int time){
 }
 
 void
-MouseClickEvent(int mouseX, int mouseY){
+KeyboardDownEvent(unsigned char key, int mouseX, int mouseY){
+
+}
+
+void
+KeyboardUpEvent(unsigned char key, int mouseX, int mouseY){
+
+}
+
+void
+MouseClickEvent(int button, int state, int mouseX, int mouseY){
+    if(button != 0) return;
+    if(state == 0){
+        mouseClicked = true;
+    } else {
+        mouseClicked = false;
+    }
     for(unsigned int i=0; i<cells->size(); i++){
-        if(cells->at(i)->isInside(mouseX, mouseY)) cells->at(i)->isCurrentlyActive = true;
+        if(cells->at(i)->isInside(mouseX, mouseY)) cells->at(i)->currentState = true;
+    }
+}
+
+void
+MouseDragEvent(int mouseX, int mouseY){
+    for(unsigned int i=0; i<cells->size(); i++){
+        if(cells->at(i)->isInside(mouseX, mouseY)) cells->at(i)->currentState = true;
     }
 }

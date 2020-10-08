@@ -17,66 +17,57 @@ Cell::~Cell(){
 void
 Cell::draw(){
     glLineWidth(1);
-    glColor3f(0.9, 0.9, 0.9);
-    glBegin(GL_LINES);
+    glColor3f(0.4, 0.4, 0.4);
+    glBegin(GL_LINE_LOOP);
     {
         glVertex2f(this->pos->x, this->pos->y);
         glVertex2f(this->pos->x + this->size, this->pos->y);
-
-        glVertex2f(this->pos->x + this->size, this->pos->y);
-        glVertex2f(this->pos->x + this->size, this->pos->y + this->size);
-
         glVertex2f(this->pos->x + this->size, this->pos->y + this->size);
         glVertex2f(this->pos->x, this->pos->y + this->size);
-
-        glVertex2f(this->pos->x, this->pos->y + this->size);
-        glVertex2f(this->pos->x, this->pos->y);
     }
     glEnd();
 
-    if(this->isCurrentlyActive) {
-        glColor3f(0, 0, 0);
-        glBegin(GL_POLYGON);
-        {
-            glVertex2f(this->pos->x, this->pos->y);
-            glVertex2f(this->pos->x + this->size, this->pos->y);
-            glVertex2f(this->pos->x + this->size, this->pos->y + this->size);
-            glVertex2f(this->pos->x, this->pos->y + this->size);
-        }
-        glEnd();
+    if(this->currentState) glColor4f(0, 0, 0, 1); else glColor4f(1, 1, 1, 1);
+    glBegin(GL_POLYGON);
+    {
+        glVertex2f(this->pos->x, this->pos->y);
+        glVertex2f(this->pos->x + this->size, this->pos->y);
+        glVertex2f(this->pos->x + this->size, this->pos->y + this->size);
+        glVertex2f(this->pos->x, this->pos->y + this->size);
     }
+    glEnd();
 }
 
 void
 Cell::checkNeighbours(std::vector<Cell*> * cells, unsigned int myIndex, int rowSize, int ceilSize){
-    int neigh[8] = {
+    int neighbours[8] = {
         myIndex - rowSize - 1,  myIndex - rowSize,  myIndex - rowSize + 1
     ,   myIndex           - 1,                      myIndex           + 1
     ,   myIndex + rowSize - 1,  myIndex + rowSize,  myIndex + rowSize + 1
     };
     for(int i=0 ; i<8; i++){
-        if(neigh[i] < 0){
-            neigh[i] = -1;
+        if(neighbours[i] < 0){
+            neighbours[i] = -1;
         }
-        if(neigh[i] > cells->size()-1){
-            neigh[i] = -1;
+        if(neighbours[i] > cells->size()-1){
+            neighbours[i] = -1;
         }
     }
 
     int friendActives = 0;
 
     for(int i=0 ; i<8; i++){
-        if(neigh[i] == -1) continue;
+        if(neighbours[i] == -1) continue;
 
         bool friendActive = false;
-        friendActive = cells->at(neigh[i])->isCurrentlyActive;
+        friendActive = cells->at(neighbours[i])->currentState;
 
         if(friendActive){
             friendActives++;
         }
     }
 
-    if(this->isCurrentlyActive){
+    if(this->currentState){
         if(friendActives < 2) this->nextState = false;
         if(friendActives == 2 || friendActives == 3) this->nextState = true;
         if(friendActives > 3) this->nextState = false;
@@ -87,7 +78,7 @@ Cell::checkNeighbours(std::vector<Cell*> * cells, unsigned int myIndex, int rowS
 
 void
 Cell::step(){
-    this->isCurrentlyActive = this->nextState;
+    this->currentState = this->nextState;
 }
 
 bool

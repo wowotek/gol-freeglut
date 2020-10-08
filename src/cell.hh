@@ -10,8 +10,9 @@ class Cell {
 public:
     coord2d * pos;
     double size;
-    bool isCurrentlyActive = false;
-    bool nextState = this->isCurrentlyActive;
+    
+    bool currentState = false;
+    bool nextState = this->nextState;
 
     Cell(double, double, double);
     ~Cell();
